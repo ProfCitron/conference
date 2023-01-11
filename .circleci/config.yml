@@ -1,8 +1,19 @@
 version: 2.1
 jobs:
-  lint:
+  build:
     working_directory: ~/repo
+    docker:
+      - image: node:latest
     steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run: npm install
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - "node_modules"
+      - run: npm install --save-dev eslint htmlhint stylelint stylelint-config-standard
       - run:
           name: Lint JavaScript
           command: npx eslint .
