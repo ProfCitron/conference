@@ -1,0 +1,14 @@
+version: 2.1
+jobs:
+  lint:
+    working_directory: ~/repo
+    steps:
+      - run:
+          name: Lint JavaScript
+          command: npx eslint .
+      - run:
+          name: Lint CSS
+          command: npx stylelint '**/*.css'
+      - run:
+          name: Lint HTML
+          command: npx htmlhint '**/*.html'
